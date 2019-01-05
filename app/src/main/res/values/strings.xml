@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PMFetcher</string>
+    <string name="hot_news">热门文章</string>
 </resources>

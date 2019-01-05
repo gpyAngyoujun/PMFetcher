@@ -103,6 +103,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                     @Override
                     public void run() {
                         notifyDataSetChanged();
+                        if (listener != null) {
+                            listener.onArrived(newsData.getPayload().size());
+                        }
                     }
                 });
             }
@@ -131,20 +134,29 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         Toast.makeText(context, "copied all", Toast.LENGTH_SHORT).show();
     }
 
+    private OnDataArrivedListener listener;
+
+    void setOnDataArrivedListener(OnDataArrivedListener listener) {
+        this.listener = listener;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView title;
+        private final TextView time;
         private final Button copy;
 
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_title);
+            time = itemView.findViewById(R.id.tv_time);
             copy = itemView.findViewById(R.id.copy_url);
         }
 
         void bind(final NewsData.Payload payload) {
 
             title.setText(payload.getTitle());
+            time.setText(payload.getDate());
 
             copy.setOnClickListener(new View.OnClickListener() {
                 @Override
